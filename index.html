@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZN/NecroMagik</title>
+    
+    <!-- ФАВИКОНКА ИЗ ВАШЕГО РЕПОЗИТОРИЯ -->
+    <!-- ЗАМЕНИТЕ 'YourUsername' на ваш логин GitHub -->
+    <link rel="icon" type="image/png" href="Logo.png">
+    
     <style>
         * {
             margin: 0;
@@ -21,40 +26,86 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .header {
             text-align: center;
             margin-bottom: 50px;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Контейнер для анимированной окантовки заголовка */
+        .title-container {
+            position: relative;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        /* Анимированная бело-серая окантовка */
+        .title-container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ffffff, #cccccc, #999999, #666666, #ffffff);
+            border-radius: 18px;
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+            background-size: 400% 400%;
+        }
+
+        .title-container::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            right: 1px;
+            bottom: 1px;
+            background: #000;
+            border-radius: 14px;
+            z-index: -1;
         }
 
         .main-title {
             font-size: 3rem;
             font-weight: bold;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        /* Цвета для ZN/ и NeeroMagik */
+        .zn-part {
+            color: #ffffff; /* Белый цвет для ZN/ */
+        }
+
+        .neeromagik-part {
+            color: #009632; /* Зелёный цвет для NeeroMagik */
         }
 
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.8;
+            margin-top: 10px;
         }
 
         .buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
         }
 
         .social-button {
             position: relative;
-            padding: 15px 30px;
-            font-size: 1.1rem;
+            padding: 18px 35px;
+            font-size: 1.2rem;
             font-weight: bold;
             text-decoration: none;
             text-align: center;
@@ -68,7 +119,7 @@
             z-index: 1;
         }
 
-        /* Градиентная обводка */
+        /* Бело-серая анимированная окантовка для кнопок */
         .social-button::before {
             content: '';
             position: absolute;
@@ -76,12 +127,14 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background: linear-gradient(45deg, #ffffff, #cccccc, #999999, #666666, #ffffff);
             border-radius: 52px;
             z-index: -1;
+            animation: borderRotate 3s linear infinite;
+            background-size: 400% 400%;
         }
 
-        /* Черный фон внутри */
+        /* Чёрный фон внутри кнопки */
         .social-button::after {
             content: '';
             position: absolute;
@@ -94,37 +147,88 @@
             z-index: -1;
         }
 
+        /* Цвета текста для разных кнопок */
+        .youtube-btn { color: #FF0000; } /* Красный для YouTube */
+        .twitch-btn { color: #9146FF; } /* Фиолетовый для Twitch */
+        .vk-btn { color: #0077FF; } /* Синий для VK */
+        .tencrpaw-btn { color: #FF6B35; } /* Оранжевый для Tencrpaw */
+        .discord-btn { color: #5865F2; } /* Синий для Discord */
+
         /* Эффект при наведении */
         .social-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
         }
 
         .social-button:hover::before {
-            animation: gradientMove 2s ease infinite;
+            animation-duration: 1.5s;
         }
 
-        /* Анимация градиента */
-        @keyframes gradientMove {
+        /* Анимация градиента для окантовки */
+        @keyframes borderRotate {
             0% {
                 background-position: 0% 50%;
+                transform: rotate(0deg);
             }
             50% {
                 background-position: 100% 50%;
             }
             100% {
                 background-position: 0% 50%;
+                transform: rotate(360deg);
             }
+        }
+
+        /* Альтернативная анимация без вращения */
+        @keyframes borderFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        /* Анимация появления */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header, .buttons-container {
+            animation: fadeInUp 1s ease-out;
         }
 
         /* Адаптивность */
         @media (max-width: 768px) {
             .main-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                padding: 15px 30px;
             }
             
             .buttons-container {
-                max-width: 250px;
+                max-width: 280px;
+            }
+            
+            .social-button {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.8rem;
+                padding: 12px 25px;
             }
             
             .social-button {
@@ -136,50 +240,54 @@
 </head>
 <body>
     <div class="header">
-        <h1 class="main-title">ZN/NecroMagik</h1>
+        <div class="title-container">
+            <h1 class="main-title">
+                <span class="zn-part">ZN/</span><span class="neeromagik-part">NeeroMagik</span>
+            </h1>
+        </div>
         <p class="subtitle">Социальные сети и контакты</p>
     </div>
 
     <div class="buttons-container">
         <!-- ВСТАВЬТЕ ССЫЛКУ В href ЗДЕСЬ -->
-        <a href="https://www.youtube.com/@09NecroMagik" class="social-button" target="_blank">
+        <a href="https://www.youtube.com/@09NecroMagik/" class="social-button youtube-btn" target="_blank">
             YouTube
         </a>
 
         <!-- ВСТАВЬТЕ ССЫЛКУ В href ЗДЕСЬ -->
-        <a href="https://www.twitch.tv/necromagiktruth" class="social-button" target="_blank">
+        <a href="https://www.twitch.tv/necromagiktruth" class="social-button twitch-btn" target="_blank">
             Twitch
         </a>
 
         <!-- ВСТАВЬТЕ ССЫЛКУ В href ЗДЕСЬ -->
-        <a href="https://vk.com/zn_necromagik" class="social-button" target="_blank">
+        <a href="https://vk.com/zn_NecroMagik" class="social-button vk-btn" target="_blank">
             VK
         </a>
 
         <!-- ВСТАВЬТЕ ССЫЛКУ В href ЗДЕСЬ -->
-        <a href="t.me/NecroThemik/" class="social-button" target="_blank">
+        <a href="t.me/NecroThemik" class="social-button tencrpaw-btn" target="_blank">
             Telegram
         </a>
 
         <!-- ВСТАВЬТЕ ССЫЛКУ В href ЗДЕСЬ -->
-        <a href="https://discord.gg/Tdx6xZtt82" class="social-button" target="_blank">
+        <a href="https://discord.gg/Tdx6xZtt82" class="social-button discord-btn" target="_blank">
             Discord
         </a>
     </div>
 
     <script>
-        // Добавляем небольшую анимацию при загрузке
+        // Добавляем анимацию при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             const buttons = document.querySelectorAll('.social-button');
             buttons.forEach((button, index) => {
                 button.style.opacity = '0';
-                button.style.transform = 'translateY(20px)';
+                button.style.transform = 'translateY(30px)';
                 
                 setTimeout(() => {
-                    button.style.transition = 'all 0.5s ease';
+                    button.style.transition = 'all 0.6s ease';
                     button.style.opacity = '1';
                     button.style.transform = 'translateY(0)';
-                }, 100 * index);
+                }, 200 * index);
             });
         });
     </script>
